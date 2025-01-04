@@ -27,7 +27,7 @@ export const configurePassport =async()=>{
     });
 
 
-    //manage user login with localStrategy in passport
+    //middleware, user login with localStrategy in passport
 
     passport.use(new GraphQLLocalStrategy(async(username,password, done)=> {
 

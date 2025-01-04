@@ -12,15 +12,16 @@ import prisma from "./lib/prisma.js"
 import passport from "passport"
 import session from "express-session";
 import ConnectMongoDBSession from "connect-mongodb-session";
+import { configurePassport } from "./passport/passport.config.js"
 const app = express();
 dotenv.config();
 
-
+configurePassport();
 
 const httpServer=http.createServer(app)
 
 
-const mongoDBstore=ConnectMongoDBSession(session)
+const mongoDBstore= ConnectMongoDBSession(session)
 const store = new mongoDBstore({
   uri: process.env.DATABASE_URL,
   collection: 'sessions'
@@ -32,6 +33,7 @@ app.use(session({
      secret: process.env.SESSION_SECRET,
      resave: false, // this option specifies whether to save the session to the store on every request
      saveUninitialized:false, // // option specifies whether to save uninitialized sessions( Didn't save a new session if it hasn't been used yet)
+      name:"token",
      cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 7,
 			httpOnly: true, 
@@ -57,7 +59,7 @@ app.use("/graphql",cors({
 }),
   express.json(),
   expressMiddleware(server,{
-    context: async({req,res})=> buildContext({req,res})
+     context: async({req,res})=> buildContext({req,res})
   })
 );
 
