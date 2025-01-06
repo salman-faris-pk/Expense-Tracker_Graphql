@@ -42,7 +42,7 @@ app.use(session({
 }));
 
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session());  //For every subsequent request, passport.session() middleware runs and checks the session
 
 
 const server= new ApolloServer({
