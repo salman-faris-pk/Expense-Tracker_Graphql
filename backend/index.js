@@ -59,7 +59,7 @@ app.use("/graphql",cors({
 }),
   express.json(),
   expressMiddleware(server,{
-     context: async({req,res})=> buildContext({req,res})
+     context: async({req,res})=> buildContext({req,res})  // or add user: req.user and Access the user ,in the resolver like this "const { user } = context;""
   })
 );
 

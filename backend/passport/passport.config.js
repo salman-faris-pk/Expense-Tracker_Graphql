@@ -13,8 +13,8 @@ export const configurePassport =async()=>{
         done(none, user.id);
     });
 
-    passport.deserializeUser(async(id, done)=> {  //Retrieving full user data from the stored identifier (e.g., user ID).
-        console.log("Desrialozinguser");
+    passport.deserializeUser(async(id, done)=> {  //checks for autharization 
+        console.log("Desrialozing user");
         try {
             const user=await prisma.user.findUnique({
                 where: { id: id },
