@@ -22,7 +22,7 @@ const transactionTypeDefs=`#graphql
 
  type Query {
     transactions: [Transaction!]
-    transaction(transactionId:ID!): Transaction
+    transaction(transactionId: ID!): Transaction
     categoryStatistics: [CategoryStatistics!]
  }
 
