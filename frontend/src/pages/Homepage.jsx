@@ -5,15 +5,16 @@ import Cards from "../components/Cards";
 import TransactionForm from "../components/TransactionForm";
 
 import { MdLogout } from "react-icons/md";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import toast from "react-hot-toast";
+import { GET_AUTHENTICATED_USER } from "../graphql/queries/user.query";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HomePage = () => {
 
+    const { data: authUserData } = useQuery(GET_AUTHENTICATED_USER);
 
-	
 	const [logout, {loading, client}]=useMutation(LOGOUT,{
 		refetchQueries:["GetAuthenticatedUser"]
 	});
@@ -58,7 +59,7 @@ const HomePage = () => {
 						Spend wisely, track wisely
 					</p>
 					<img
-						src={"https://tecdn.b-cdn.net/img/new/avatars/2.webp"}
+						src={authUserData?.authUser.profilePicture}
 						className='w-11 h-11 rounded-full border cursor-pointer'
 						alt='Avatar'
 					/>
@@ -71,9 +72,9 @@ const HomePage = () => {
 						<Doughnut data={chartData} />
 					</div>
 
-					<TransactionForm />
+					   <TransactionForm />
 				</div>
-				<Cards />
+				     <Cards />
 			</div>
 		</>
 	);

@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound"
 import { useQuery } from "@apollo/client"
 import { GET_AUTHENTICATED_USER } from "./graphql/queries/user.query"
 import { Toaster } from "react-hot-toast"
+import { ScrollToTop } from "./utils/scrollToTop"
 
 const App = () => {
     
@@ -18,6 +19,7 @@ const App = () => {
 
   return (
     <>
+	     <ScrollToTop />
 			{data?.authUser && <Header />}
 			<Routes>
 				<Route path='/' element={data?.authUser ? <HomePage /> : <Navigate to='/login' />} />

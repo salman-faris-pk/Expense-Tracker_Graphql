@@ -88,11 +88,13 @@ const transactionResolver = {
                throw new Error("Unauthorized");
              };
 
+             const { transactionId, ...data } = input; 
+
              const updatedTransaction = await prisma.transaction.update({
                 where:{
-                    id: input.transactionId,
+                    id: transactionId,
                 },
-                data: input,
+                data,
              });
 
              return updatedTransaction;
