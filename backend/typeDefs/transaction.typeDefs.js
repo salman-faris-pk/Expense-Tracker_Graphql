@@ -3,7 +3,7 @@
 const transactionTypeDefs=`#graphql 
  
  type Transaction {
-    _id: ID!
+    id: ID!
     userId: ID!
     description: String!
     paymentType: String!

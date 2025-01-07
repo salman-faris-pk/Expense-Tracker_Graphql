@@ -5,12 +5,11 @@ import { GraphQLLocalStrategy } from "graphql-passport";
 
 
 
-
 export const configurePassport =async()=>{
 
     passport.serializeUser((user, done)=> {   // Storing user identifier (like user ID) in the session.
         console.log("serializing user");
-        done(none, user.id);
+        done(null, user.id);
     });
 
     passport.deserializeUser(async(id, done)=> {  //checks for autharization 
@@ -20,7 +19,7 @@ export const configurePassport =async()=>{
                 where: { id: id },
             }); 
             done(null, user)  // null indicates success,if err then shows error instead of null
-        } catch (error) {
+        } catch (err) {
             done(err);
         }
         
@@ -51,7 +50,7 @@ export const configurePassport =async()=>{
             done(null, user);
 
             
-        } catch (error) {
+        } catch (err) {
             return done(err);
         }
 

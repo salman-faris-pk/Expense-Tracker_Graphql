@@ -5,7 +5,7 @@ const transactionResolver = {
         transactions: async(_,__,context)=>{
           try {
             if (!context.getUser()) throw new Error("Unauthorized");
-            const userId=await context.getUser._id;
+            const userId=await context.getUser.id;
 
             const transactions=await prisma.transaction.findMany({
                  where:{ userId: userId}
@@ -38,7 +38,7 @@ const transactionResolver = {
         categoryStatistics: async(_,__,context)=>{
             if (!context.getUser()) throw new Error("Unauthorized");
 
-            const userId = context.getUser()._id;
+            const userId = context.getUser().id;
             const transactions= await prisma.transaction.findMany({
                 where:{id: userId}
             });
@@ -68,7 +68,7 @@ const transactionResolver = {
             const newTransaction=await prisma.transaction.create({
                 data:{
                     ...input,
-                    userId: user._id,
+                    userId: user.id,
                 }
             });
 

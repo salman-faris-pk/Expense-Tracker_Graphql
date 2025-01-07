@@ -26,7 +26,7 @@ const userResolver={
                 
                 //https://avatar-placeholder.iran.liara.run/ 
                 const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
-				const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
+				        const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
                 const newUser=await prisma.user.create({
                  data:{ 
@@ -43,7 +43,7 @@ const userResolver={
 
           } catch (err) { 
             console.error("Error in signUp: ", err);
-			throw new Error(err.message || "Internal server error");
+			      throw new Error(err.message || "Internal server error");
           }
         },
 
@@ -59,7 +59,7 @@ const userResolver={
             
            } catch (err) {
              console.error("Error in login:", err);
-			 throw new Error(err.message || "Internal server error");
+			       throw new Error(err.message || "Internal server error");
            }
         },
 
@@ -90,7 +90,6 @@ const userResolver={
         authUser: async(_,__,context)=> {
             try {
                 const user= await context.getUser();  //getUser,"graphql-passport" built in feature
-
                 return user;
                 
             } catch (err) {
@@ -122,7 +121,7 @@ const userResolver={
             try {
                 const transactions = await prisma.transaction.findMany({
                   where:{
-                    userId: parent._id
+                    userId: parent.id
                   },
                 });
 
