@@ -17,6 +17,8 @@ const Cards = () => {
    });
   
 //    console.log(userAndTransactions);
+// console.log(data);
+
 
    
    

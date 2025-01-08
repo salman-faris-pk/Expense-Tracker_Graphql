@@ -51,8 +51,7 @@ const Card = ({ transaction, authUser}) => {
 	};
 
 	const isOwner = authUser?.id === transaction.userId;
-
-
+   
 	return (
 		<div className={`rounded-md p-4 bg-gradient-to-br ${cardClass}`}>
 			<div className='flex flex-col gap-3'>
@@ -89,7 +88,7 @@ const Card = ({ transaction, authUser}) => {
 				<div className='flex justify-between items-center'>
 					<p className='text-xs text-black font-bold'>{formattedDate}</p>
 					<img
-						src={isOwner ? authUser?.profilePicture : "https://tecdn.b-cdn.net/img/new/avatars/2.webp"}
+						src={transaction?.user?.profilePicture ||  "https://tecdn.b-cdn.net/img/new/avatars/2.webp"}
 						className='h-8 w-8 border rounded-full'
 						alt='avatar'
 					/>
