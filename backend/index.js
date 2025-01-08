@@ -2,6 +2,7 @@ import { ApolloServer } from "@apollo/server";
 import { expressMiddleware }from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import express from "express";
+import path from "path";
 import http from "http";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -13,6 +14,9 @@ import passport from "passport"
 import session from "express-session";
 import ConnectMongoDBSession from "connect-mongodb-session";
 import { configurePassport } from "./passport/passport.config.js"
+
+
+const __dirname=path.resolve();
 const app = express();
 dotenv.config();
 
@@ -62,6 +66,17 @@ app.use("/graphql",cors({
      context: async({req,res})=> buildContext({req,res})  // or add user: req.user and Access the user ,in the resolver like this "const { user } = context;""
   })
 );
+
+
+
+//npm run build will build your frontend app
+app.use(express.static(path.join(__dirname, "frontend/dist")));
+
+app.get("*",(req,res)=>{
+   res.sendFile(path.join(__dirname, "frontend/dist", "index.html"));
+});
+
+
 
    await new Promise((resolve) =>
     httpServer.listen({ port: 4000 }, resolve),
