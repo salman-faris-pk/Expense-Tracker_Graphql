@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GET_TRANSACTION } from "../graphql/queries/transaction.query"
+import { GET_TRANSACTION,GET_TRANSACTION_STATISTICS } from "../graphql/queries/transaction.query"
 import { useParams } from "react-router-dom"
 import { useMutation, useQuery } from "@apollo/client";
 import TransactionFormSkeleton from "../components/skeleton/TransactionFormSkeleton"
@@ -15,7 +15,10 @@ const TransactionPage = () => {
         variables:{id: id}
 	});
      
-	const [updateTransaction, {loading: loadingUpadte}]=useMutation(UPDATE_TRANSACTION)
+	const [updateTransaction, {loading: loadingUpadte}]=useMutation(UPDATE_TRANSACTION,{
+      refetchQueries: [{query: GET_TRANSACTION_STATISTICS}]
+	});
+
 
 	const [formData, setFormData] = useState({
 	    description: data?.transaction?.description || "",

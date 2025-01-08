@@ -5,6 +5,7 @@ export const GET_TRANSACTIONS=gql`
       query GetTransactions{
         transactions{
             id
+			userId
 			description
 			paymentType
 			category
@@ -35,5 +36,15 @@ export const GET_TRANSACTION= gql`
 		  }
 	   }
 
+`;
+
+
+export const  GET_TRANSACTION_STATISTICS=gql`
+        query GetTransactionStatistics{
+			categoryStatistics {
+				category
+				totalamount
+			}
+		}
 `;
 

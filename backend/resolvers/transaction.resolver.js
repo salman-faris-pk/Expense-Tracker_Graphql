@@ -40,8 +40,9 @@ const transactionResolver = {
 
             const userId = context.getUser().id;
             const transactions= await prisma.transaction.findMany({
-                where:{id: userId}
+                where:{userId: userId}
             });
+            
 
             const categoryMap = {};
 
@@ -52,6 +53,7 @@ const transactionResolver = {
 
                  categoryMap[transaction.category] += transaction.amount;
             });
+            
 
              return Object.entries(categoryMap).map(([category, totalamount]) => ({ category, totalamount})); //convert object into array and map
         },

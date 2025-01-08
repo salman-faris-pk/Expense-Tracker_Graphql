@@ -19,15 +19,14 @@ const categoryColorMap = {
 };
 
 
-const Card = ({ transaction, authUser }) => {
+const Card = ({ transaction, authUser}) => {
 
 	let { category, amount, location, date, paymentType, description } = transaction;
 
 	const cardClass = categoryColorMap[category];
 
-
      const [deleteTranscation, {loading}]=useMutation(DELETE_TRANSACTION,{
-       refetchQueries:["GetTransactions"]
+       refetchQueries:["GetTransactions","GetTransactionStatistics"]
 	 });
 
     
@@ -49,20 +48,27 @@ const Card = ({ transaction, authUser }) => {
 			console.error("Error deleting transaction:", error);
 			toast.error(error.message);
 		 }
-	}
+	};
+
+	const isOwner = authUser?.id === transaction.userId;
+
 
 	return (
 		<div className={`rounded-md p-4 bg-gradient-to-br ${cardClass}`}>
 			<div className='flex flex-col gap-3'>
 				<div className='flex flex-row items-center justify-between'>
 					<h2 className='text-lg font-bold text-white'>{category}</h2>
-					<div className='flex items-center gap-2'>
-					   {!loading && <FaTrash className={"cursor-pointer"} onClick={handleDelete}/>}	
-					   {loading && <div className='w-6 h-6 border-t-2 border-b-2  rounded-full animate-spin'></div>}
-						<Link to={`/transaction/${transaction.id}`}>
-							<HiPencilAlt className='cursor-pointer' size={20} />
-						</Link>
-					</div>
+					{isOwner && (
+                    <div className="flex items-center gap-2">
+                     {!loading && <FaTrash className="cursor-pointer" onClick={handleDelete} />}
+                       {loading && (
+                        <div className="w-6 h-6 border-t-2 border-b-2 rounded-full animate-spin"></div>
+                             )}
+                 <Link to={`/transaction/${transaction.id}`}>
+                   <HiPencilAlt className="cursor-pointer" size={20} />
+                   </Link>
+                </div>
+                )}
 				</div>
 				<p className='text-white flex items-center gap-1'>
 					<BsCardText />
@@ -83,7 +89,7 @@ const Card = ({ transaction, authUser }) => {
 				<div className='flex justify-between items-center'>
 					<p className='text-xs text-black font-bold'>{formattedDate}</p>
 					<img
-						src={authUser?.profilePicture}
+						src={isOwner ? authUser?.profilePicture : "https://tecdn.b-cdn.net/img/new/avatars/2.webp"}
 						className='h-8 w-8 border rounded-full'
 						alt='avatar'
 					/>
