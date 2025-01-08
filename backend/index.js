@@ -14,6 +14,7 @@ import passport from "passport"
 import session from "express-session";
 import ConnectMongoDBSession from "connect-mongodb-session";
 import { configurePassport } from "./passport/passport.config.js"
+import job from "./cron.js"
 
 
 const __dirname=path.resolve();
@@ -21,6 +22,8 @@ const app = express();
 dotenv.config();
 
 configurePassport();
+
+job.start();
 
 const httpServer=http.createServer(app)
 
